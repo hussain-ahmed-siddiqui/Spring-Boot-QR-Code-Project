@@ -20,6 +20,8 @@ public class TagParser {
     public TagParser() {
         this.tagInfoMap = new HashMap<>();
         this.foundTags = new LinkedHashMap<>();
+        this.foundSubTagsMAI = new HashMap<>();
+        this.foundSubTagsAdditional= new HashMap<>();
         initializeTagInfoMap();
 
     }
@@ -92,6 +94,12 @@ public class TagParser {
                 s=e;
                 e+=2;
             }
+            if(foundTags.get(2)!=null){foundSubTagsMAI.put(2,foundTags.get(2));}
+            else{foundSubTagsMAI.put(3,foundTags.get(3));}
+            if(foundTags.get(4)!=null){foundSubTagsMAI.put(4,foundTags.get(4));}
+            else{foundSubTagsMAI.put(5,foundTags.get(5));}
+            if(foundTags.get(15)!=null){foundSubTagsMAI.put(15,foundTags.get(15));}
+            else{foundSubTagsMAI.put(16,foundTags.get(16));}
 
 //            raast=raast.concat("\n"+subTags[0]+"\n"+subTags[1]);
 //            foundTags.put(27,raast);
@@ -104,7 +112,7 @@ public class TagParser {
             int tagId, tagLength;
             HashMap<Integer,Boolean> foundTagslocal = new HashMap<>();
 
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; e<additionalData.length(); i++) {
                 tagId = Integer.parseInt(additionalData.substring(s, e));
                 foundTagslocal.put(tagId, true);
                 s = e;
@@ -117,6 +125,13 @@ public class TagParser {
                 s=e;
                 e+=2;
             }
+            foundSubTagsAdditional.put(1,foundTags.get(1));
+            foundSubTagsAdditional.put(5,foundTags.get(5));
+//            foundSubTagsAdditional.put(2,foundTags.get(2));
+//            foundSubTagsAdditional.put(2,foundTags.get(2));
+//            foundSubTagsAdditional.put(3,foundTags.get(3));
+
+
 
 //            for (Map.Entry<Integer,Boolean>keys:
 //                    foundTagslocal.entrySet()) {
