@@ -1,6 +1,7 @@
 package com.cloudassest.intern.qr_code_decoder;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -37,7 +38,7 @@ public class TagParser {
         tagInfoMap.put(5, "Merchant Account Info for Mastercard");
         tagInfoMap.put(15, "Merchant Account Info for UnionPay");
         tagInfoMap.put(16, "Merchant Account Info for UnionPay");
-        tagInfoMap.put(27, "Merchant Account Info for Raast");
+        tagInfoMap.put(28, "Merchant Account Info for Raast");
         tagInfoMap.put(52, "Merchant Category Code");
         tagInfoMap.put(53, "Transaction Currency");
         tagInfoMap.put(54, "Transaction Amount");
@@ -74,14 +75,14 @@ public class TagParser {
 
     private void evaluateSubTags(){
         /*For Raast*/
-        String raast = foundTags.get(27);
+        String raast = foundTags.get(28);
 
         if(raast!=null){
 //            String [] subTags = {"Sub Tag 1","Sub Tag 2"};
             int s=0,e=2;
             int tagId, taglength;
-
-            for(int i=0;i<2;i++){
+            String [] subTags=new String[3];
+            for(int i=0;e<raast.length();i++){
                 tagId = Integer.parseInt(raast.substring(s,e));
                 s=e;
                 e+=2;
@@ -89,11 +90,14 @@ public class TagParser {
                 taglength = Integer.parseInt(raast.substring(s,e));
                 s=e;
                 e=e+taglength;
-//                subTags[tagId]= raast.substring(s,e);
-                foundSubTagsMAI.put(tagId,raast.substring(s,e));
+                subTags[tagId]= raast.substring(s,e);
+//                foundSubTagsMAI.put(0,raast.substring(s,e));
                 s=e;
                 e+=2;
             }
+            String subTag = Arrays.toString(subTags);
+            subTag = subTag.substring(1,subTag.length()-1);
+            foundSubTagsMAI.put(0, subTag);
             if(foundTags.get(2)!=null){foundSubTagsMAI.put(2,foundTags.get(2));}
             else{foundSubTagsMAI.put(3,foundTags.get(3));}
             if(foundTags.get(4)!=null){foundSubTagsMAI.put(4,foundTags.get(4));}
@@ -110,11 +114,9 @@ public class TagParser {
 //            String [] subTags = new String[100];
             int s=0,e=2;
             int tagId, tagLength;
-            HashMap<Integer,Boolean> foundTagslocal = new HashMap<>();
 
             for (int i = 0; e<additionalData.length(); i++) {
                 tagId = Integer.parseInt(additionalData.substring(s, e));
-                foundTagslocal.put(tagId, true);
                 s = e;
                 e += 2;
                 tagLength = Integer.parseInt(additionalData.substring(s, e));
@@ -125,11 +127,7 @@ public class TagParser {
                 s=e;
                 e+=2;
             }
-            foundSubTagsAdditional.put(1,foundTags.get(1));
-            foundSubTagsAdditional.put(5,foundTags.get(5));
-//            foundSubTagsAdditional.put(2,foundTags.get(2));
-//            foundSubTagsAdditional.put(2,foundTags.get(2));
-//            foundSubTagsAdditional.put(3,foundTags.get(3));
+
 
 
 

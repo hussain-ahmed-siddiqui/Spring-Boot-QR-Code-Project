@@ -11,17 +11,17 @@ public class QRCodeP2M {
         this.Point_of_Initiation_Method=foundTags.get(1);
         /*Merchant Account Info */
 
-        setMAI_raast(new String[]{foundSubTagsMAI.get(0),foundSubTagsMAI.get(1)});
+        setMAI_raast(foundSubTagsMAI.get(0).split(","));
         setMAIvalues(foundSubTagsMAI);
         this.merchantCategoryCode=foundTags.get(52);
         this.transactionCurrency=foundTags.get(53);
         this.countryCode=foundTags.get(58);
         this.merchantName=foundTags.get(59);
         this.merchantCity=foundTags.get(60);
-        /*AdditionaL data*/
+        /*Additional data*/
 
         setAdditionalInfo(foundSubTagsAdditional);
-
+        this.RFU_SBP=foundTags.get(94);
         this.Cycle_Redundancy_Check=foundTags.get(63);
     }
 
