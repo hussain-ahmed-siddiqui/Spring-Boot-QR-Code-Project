@@ -5,7 +5,9 @@ import java.util.Map;
 
 public class QRCodeP2M {
 
+    public QRCodeP2M(){
 
+    }
     public QRCodeP2M(Map<Integer,String> foundTags,Map<Integer,String> foundSubTagsMAI,Map<Integer,String> foundSubTagsAdditional){
         this.qrFormat="P2M";
         this.Payload_Format_Indicator=foundTags.get(0);
