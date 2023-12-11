@@ -1,5 +1,6 @@
 package com.cloudassest.intern.qr_code_decoder;
 
+import java.util.Arrays;
 import java.util.Map;
 
 public class QRCodeP2M {
@@ -9,25 +10,43 @@ public class QRCodeP2M {
         this.Payload_Format_Indicator=foundTags.get(0);
         this.Point_of_Initiation_Method=foundTags.get(1);
         /*Merchant Account Info */
-        if(foundTags.get(2)!=null){this.visa=foundTags.get(2);}
-        else{this.visa=foundTags.get(3);}
-        if(foundTags.get(4)!=null){this.masterCard=foundTags.get(4);}
-        else{this.masterCard=foundTags.get(5);}
-        if(foundTags.get(15)!=null){this.unionPay=foundTags.get(15);}
-        else{this.unionPay=foundTags.get(16);}
-        this.raast[0]=foundSubTagsMAI.get(0);
-        this.raast[1]=foundSubTagsMAI.get(1);
+
+        setMAI_raast(foundSubTagsMAI.get(0).split(","));
+        setMAIvalues(foundSubTagsMAI);
         this.merchantCategoryCode=foundTags.get(52);
         this.transactionCurrency=foundTags.get(53);
         this.countryCode=foundTags.get(58);
         this.merchantName=foundTags.get(59);
         this.merchantCity=foundTags.get(60);
-        /*AdditionaL data*/
+        /*Additional data*/
 
-        this.billNumber=foundSubTagsAdditional.get(1);
-        this.referenceLabel=foundSubTagsAdditional.get(5);
+        setAdditionalInfo(foundSubTagsAdditional);
+        this.RFU_SBP=foundTags.get(94);
         this.Cycle_Redundancy_Check=foundTags.get(63);
     }
+
+
+
+    private void setMAIvalues(Map<Integer,String> foundSubTagsMAI) {
+        if(foundSubTagsMAI.containsKey(2)){this.visa=foundSubTagsMAI.get(2);}
+        else{this.visa=foundSubTagsMAI.get(3);}
+        if(foundSubTagsMAI.containsKey(4)){this.visa=foundSubTagsMAI.get(4);}
+        else{this.visa=foundSubTagsMAI.get(5);}
+        if(foundSubTagsMAI.containsKey(15)){this.visa=foundSubTagsMAI.get(15);}
+        else{this.visa=foundSubTagsMAI.get(16);}
+        setMerchant_Account_Info(new String[]{getVisa(),getMasterCard(),getUnionPay(),Arrays.toString(getMAI_raast())});
+
+    }
+
+    private void setAdditionalInfo(Map<Integer,String> foundSubTagsAdditional) {
+        this.billNumber = foundSubTagsAdditional.get(1);
+        this.mobileNumber = foundSubTagsAdditional.get(2);
+        this.Store_Label = foundSubTagsAdditional.get(3);
+        this.Loyalty_Number = foundSubTagsAdditional.get(4);
+        this.referenceLabel = foundSubTagsAdditional.get(5);
+        setAdditionalData(new String[]{getBillNumber(), getMobileNumber(), getStore_Label(), getLoyalty_Number(), getReferenceLabel()});
+    }
+
     private String id;
     private String qrFormat;
     private String Payload_Format_Indicator;
@@ -36,7 +55,7 @@ public class QRCodeP2M {
     private String visa;
     private String masterCard;
     private String unionPay;
-    private String [] raast;
+    private String [] MAI_raast;
     private String merchantCategoryCode;
     private String transactionCurrency;
     private String countryCode;
@@ -123,12 +142,12 @@ public class QRCodeP2M {
         this.unionPay = unionPay;
     }
 
-    public String getRaast() {
-        return raast;
+    public String[] getMAI_raast() {
+        return MAI_raast;
     }
 
-    public void setRaast(String raast) {
-        this.raast = raast;
+    public void setMAI_raast(String[] MAI_raast) {
+        this.MAI_raast = MAI_raast;
     }
 
     public String getMerchantCategoryCode() {

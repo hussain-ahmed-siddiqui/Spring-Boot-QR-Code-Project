@@ -1,16 +1,18 @@
 package com.cloudassest.intern.qr_code_decoder;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class DataBaseController {
-    private Map<Integer, QRCodeP2P> db1 = new HashMap<>();
-    private Map<Integer, QRCodeP2M> db2 = new HashMap<>();
+    @Autowired
+    private P2P_Repository p2PRepository;
+    @Autowired
+    private P2M_Repository p2MRepository;
+    private Map<Integer, QRCodeP2P> db1 = new LinkedHashMap<>();
+    private Map<Integer, QRCodeP2M> db2 = new LinkedHashMap<>();
     private Integer _id=0;
 
 
