@@ -7,6 +7,27 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class QR_P2MModel {
     @Id
     private String id;
-    private QRCodeP2M data;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public QRCodeP2M getData() {
+        return data;
+    }
+
+    public void setData(QRCodeP2M data) {
+        this.data = data;
+    }
+
+    private QRCodeP2M data;
+    public QR_P2MModel() {
+    }
+    public QR_P2MModel(QRCodeP2M qrCodeP2M) {
+        this.data=qrCodeP2M;
+    }
 }
