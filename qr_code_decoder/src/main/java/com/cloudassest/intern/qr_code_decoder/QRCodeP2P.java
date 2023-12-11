@@ -4,6 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class QRCodeP2P {
+    public QRCodeP2P(){
+
+    }
     public QRCodeP2P(Map<Integer,String> foundTags){
         this.qrFormat="P2P";
         this.Payload_Format_Indicator=foundTags.get(0);
